@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelcy's 18th Midnight Debut</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Reset & Base */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:"Playfair Display",serif;
+  background: radial-gradient(circle at top,#0b0f2a,#000);
+  color:#e0e6ff;
+  scroll-behavior:smooth;
+  cursor:auto; /* Cursor visible everywhere */
+  text-align: center;
+}
+
+/* Stars background */
+.stars{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:url("https://www.transparenttextures.com/patterns/stardust.png");
+  z-index:-1;
+  animation:moveStars 120s linear infinite;
+}
+@keyframes moveStars{
+  from{background-position:0 0;}
+  to{background-position:10000px 5000px;}
+}
+
+/* Intro Page */
+#intro{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:#0b0f2a;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:999;
+  cursor:auto;
+}
+#intro h1{
+  font-family:"Great Vibes", cursive;
+  font-size:6em;
+  color:#234B87;
+  text-shadow:0 0 15px #3E69A8;
+  margin-bottom:30px;
+}
+#intro button{
+  padding:15px 40px;
+  font-size:22px;
+  background:#6c7cff;
+  color:white;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  box-shadow:0 0 15px #6c7cff;
+}
+
+/* Music Button */
+#musicBtn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  padding:10px 20px;
+  border-radius:20px;
+  border:none;
+  background:#6c7cff;
+  color:white;
+  z-index:200;
+  cursor:pointer;
+}
+
+/* Nav */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(10px);
+  padding:10px;
+  z-index:100;
+}
+nav a{
+  color:white;
+  margin:10px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* Sections */
+section{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:80px 20px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+}
+section.show{
+  opacity:1;
+  transform:translateY(0);
+}
+h1,h2,h3{
+  font-family:"Great Vibes", cursive;
+  margin-bottom:20px;
+}
+h1{font-size:5em;}
+h2{font-size:3em;}
+h3{font-size:2.5em;}
+.card{
+  background:rgba(10,15,40,0.75);
+  padding:100px;
+  border-radius:20px;
+  max-width:900px;
+  width:100%;
+  box-shadow:0 0 25px rgba(108,124,255,0.4);
+  margin-bottom:40px;
+}
+
+.card p{
+  line-height:1.8;
+  margin-bottom:15px;
+}
+
+.card h1, .card h2, .card h3{
+  margin-bottom:25px;
+}
+
+/* inadd ko HAHA*/
+#home h1{
+  letter-spacing:3px;
+  margin-bottom:30px;
+}
+
+#home h2{
+  letter-spacing:2px;
+  word-spacing:25px;
+  margin-bottom:20px;
+}
+
+/* Countdown */
+#timer{
+  font-size:6em;
+  color:#3E69A8;
+  margin-top:20px;
+}
+
+/* 18's Sections */
+.photos-18{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+.photos-18 img{
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  border-radius:15px;
+  box-shadow:0 0 15px #6c7cff;
+  transition:0.3s;
+}
+.photos-18 img:hover{transform:scale(1.05);}
+
+/* 18 Names List */
+.list-18{
+  list-style:none;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:15px;
+}
+.list-18 li{
+  width:80px;
+  height:40px;
+  line-height:40px;
+  background:rgba(52, 70, 160,0.6);
+  border-radius:10px;
+  color:white;
+}
+
+/* RSVP */
+.envelope-wrapper{
+  position:relative;
+  width:220px;
+  height:150px;
+  margin:20px auto;
+  cursor:pointer;
+  perspective:1000px;
+}
+.envelope{
+  width:100%;
+  height:100%;
+  background:#e9e2d0;
+  position:absolute;
+  bottom:0;
+  border-radius:6px;
+}
+.flap{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#e0d7c2;
+  clip-path: polygon(0 0, 50% 60%, 100% 0);
+  transform-origin:top;
+  transition:0.8s;
+  border-radius:6px;
+}
+.letter{
+  position:absolute;
+  width:90%;
+  height:120%;
+  background:white;
+  color:#234B87;
+  left:5%;
+  bottom:0;
+  padding:15px;
+  transform:translateY(60%);
+  transition:1s;
+  opacity:0;
+  text-align:center;
+}
+.envelope-wrapper.open .flap{transform:rotateX(180deg);}
+.envelope-wrapper.open .letter{transform:translateY(-20%);opacity:1;}
+.rsvp-btn{display:none;margin-top:15px;padding:12px 25px;border-radius:25px;background:#6c7cff;color:white;text-decoration:none;}
+.envelope-wrapper.open + .rsvp-btn{display:inline-block;}
+
+/* Photo Gallery */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:15px;
+}
+.gallery img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:15px;
+  box-shadow:0 0 15px #6c7cff;
+  transition:0.3s;
+}
+.gallery img:hover{transform:scale(1.05);}
+
+/* Color Palette */
+.palette{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:20px 0;
+}
+.color-sample{
+  width:80px;
+  height:80px;
+  border-radius:10px;
+}
+
+/* Dress Code */
+.dress-images{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+.dress-images img{
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  border-radius:15px;
+  box-shadow:0 0 15px #6c7cff;
+}
+
+/* FAQ */
+.faq-container{
+  background:rgba(10,15,40,0.75);
+  padding:40px;
+  border-radius:20px;
+  max-width:900px;
+  color:#d4d8ff;
+  box-shadow:0 0 30px #6c7cff;
+  text-align:center;
+  margin-bottom:40px;
+}
+.faq-question{font-weight:bold;margin-top:25px;font-size:1.2em;}
+.faq-answer{margin-bottom:25px;font-size:1.1em;}
+.decorative-line{width:100px;height:20px;margin:20px auto 40px;background: url('data:image/svg+xml;utf8,<svg fill="%236c7cff" height="20" viewBox="0 0 150 20" xmlns="http://www.w3.org/2000/svg"><path d="M15 10 C35 5, 40 15, 60 10 S 90 5, 110 10" stroke="%236c7cff" stroke-width="2" fill="none"/></svg>') no-repeat center center;background-size:contain;opacity:0.6;}
+
+/* Magic Cursor Wand */
+.star{position:fixed;width:6px;height:6px;background:white;border-radius:50%;pointer-events:none;animation:sparkle 1s linear forwards;}
+@keyframes sparkle{from{opacity:1; transform:scale(1);} to{opacity:0; transform:scale(3);}}
+
+/* Wand cursor on click */
+.cursor-wand{cursor:url('https://i.ibb.co/0BShhQ2/wand-cursor.png'),auto;}
+
+/* First Section Glow */
+.glow h1, .glow h2{
+  text-shadow:
+    0 0 10px #6c7cff,
+    0 0 20px #6c7cff,
+    0 0 30px #3E69A8,
+    0 0 40px #3E69A8;
+}
+</style>
+</head>
+<body>
+
+<!-- Intro -->
+<div id="intro">
+  <h1>You're Invited</h1>
+  <button onclick="enterSite()">Enter Invitation</button>
+</div>
+
+<!-- Music -->
+<audio id="music" loop>
+  <source src="lavender-haze-instrumental.mp3" type="audio/mpeg">
+</audio>
+<button id="musicBtn" onclick="toggleMusic()">Play Music</button>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#countdown">Countdown</a>
+<a href="#map">Venue</a>
+<a href="#timeline">Timeline</a>
+<a href="#photos18">18's</a>
+<a href="#candles18">18 Candles</a>
+<a href="#blessings18">18 Blessings</a>
+<a href="#shots18">18 Shots</a>
+<a href="#gallery">Gallery</a>
+<a href="#dress">Dress Code</a>
+<a href="#faq">FAQ</a>
+<a href="#rsvp">RSVP</a>
+</nav>
+
+<div class="stars"></div>
+
+<!-- Home -->
+<section id="home" class="show glow">
+<div class="card">
+<h1>K e l c y L u l u</h1>
+<h2>18th Birthday Debut</h2>
+<p>Join me under the midnight stars ✨</p>
+<p>Angelo Pogi ✨</p>
+</div>
+</section>
+
+<!-- Countdown -->
+<section id="countdown">
+<div class="card">
+<h2>Countdown to My Debut</h2>
+<div id="timer"></div>
+</div>
+</section>
+
+<!-- Map -->
+<section id="map">
+<div class="card">
+<h2>Venue Location</h2>
+<iframe src="https://www.google.com/maps?q=2542+Leiva+Corner,+Sta.+Ana,+Manila,+Metro+Manila,+Philippines&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+</div>
+</section>
+
+<!-- Timeline -->
+<section id="timeline">
+<div class="card">
+<h2>Event Timeline</h2>
+<ul style="list-style:none;padding-left:0;">
+<li>5:00 PM - Guests Arrival</li>
+<li>6:00 PM - 18 Roses</li>
+<li>6:30 PM - 18 Candles</li>
+<li>7:00 PM - 18 Blessings</li>
+<li>7:30 PM - 18 Shots</li>
+<li>8:00 PM - Dinner & Entertainment</li>
+<li>10:00 PM - Closing</li>
+</ul>
+</div>
+</section>
+
+<!-- 18 Roses -->
+<section id="photos18">
+<div class="card">
+<h2>🌹 18 Roses</h2>
+<div class="photos-18">
+<img src="https://placeimg.com/150/150/people?1">
+<img src="https://placeimg.com/150/150/people?2">
+<img src="https://placeimg.com/150/150/people?3">
+</div>
+<ul class="list-18">
+<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+<li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li>
+<li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li>
+</ul>
+</div>
+</section>
+
+<!-- 18 Candles -->
+<section id="candles18">
+<div class="card">
+<h2>🕯️ 18 Candles</h2>
+<div class="photos-18">
+<img src="https://placeimg.com/150/150/people?21">
+<img src="https://placeimg.com/150/150/people?22">
+<img src="https://placeimg.com/150/150/people?23">
+</div>
+<ul class="list-18">
+<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+<li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li>
+<li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li>
+</ul>
+</div>
+</section>
+
+<!-- 18 Blessings -->
+<section id="blessings18">
+<div class="card">
+<h2>🙏 18 Blessings</h2>
+<div class="photos-18">
+<img src="https://placeimg.com/150/150/people?31">
+<img src="https://placeimg.com/150/150/people?32">
+<img src="https://placeimg.com/150/150/people?33">
+</div>
+<ul class="list-18">
+<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+<li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li>
+<li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li>
+</ul>
+</div>
+</section>
+
+<!-- 18 Shots -->
+<section id="shots18">
+<div class="card">
+<h2>🥂 18 Shots</h2>
+<div class="photos-18">
+<img src="https://placeimg.com/150/150/people?41">
+<img src="https://placeimg.com/150/150/people?42">
+<img src="https://placeimg.com/150/150/people?43">
+</div>
+<ul class="list-18">
+<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li>
+<li>6</li><li>7</li><li>8</li><li>9</li><li>10</li>
+<li>11</li><li>12</li><li>13</li><li>14</li><li>15</li>
+<li>16</li><li>17</li><li>18</li>
+</ul>
+</div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery">
+<div class="card">
+<h2>Photo Gallery</h2>
+<div class="gallery">
+<img src="https://placeimg.com/300/300/people?4">
+<img src="https://placeimg.com/300/300/people?5">
+<img src="https://placeimg.com/300/300/people?6">
+<img src="https://placeimg.com/300/300/people?7">
+<img src="https://placeimg.com/300/300/people?8">
+<img src="https://placeimg.com/300/300/people?9">
+<img src="https://placeimg.com/300/300/people?10">
+<img src="https://placeimg.com/300/300/people?11">
+<img src="https://placeimg.com/300/300/people?12">
+<img src="https://placeimg.com/300/300/people?13">
+</div>
+</div>
+</section>
+
+<!-- Dress Code -->
+<section id="dress">
+<div class="card">
+<h2>Dress Code</h2>
+<p>Semi-Formal Attire</p>
+<div class="dress-images">
+<img src="https://placeimg.com/150/150/fashion?1">
+<img src="https://placeimg.com/150/150/fashion?2">
+</div>
+<div class="palette">
+<div class="color-sample" style="background:#353775"></div>
+<div class="color-sample" style="background:#3F7E99"></div>
+<div class="color-sample" style="background:#3E69A8"></div>
+<div class="color-sample" style="background:#234B87"></div>
+<div class="color-sample" style="background:#151261"></div>
+<div class="color-sample" style="background:#140A3D"></div>
+</div>
+</div>
+</section>
+
+<!-- FAQ & Reminders -->
+<section id="faq">
+<div class="faq-container">
+<h2>Frequently Asked Questions & Reminders</h2>
+
+<div class="faq-question">What is the dress code?</div>
+<div class="faq-answer">Guests are encouraged to wear semi-formal attire in soft, elegant shades.</div>
+<div class="decorative-line"></div>
+
+<div class="faq-question">Can I bring a plus one?</div>
+<div class="faq-answer">Each invitation is reserved for a specific guest. Please check your invitation details.</div>
+<div class="decorative-line"></div>
+
+<div class="faq-question">When is the RSVP deadline?</div>
+<div class="faq-answer">The RSVP deadline is <strong>November 8, 2025</strong>. Please respond by this date.</div>
+<div class="decorative-line"></div>
+
+<div class="faq-question">Reminders</div>
+<div class="faq-answer">Feel free to capture photos and videos of the celebration and share them on social media with the hashtags:<br>#Kelcy18thDebut #MidnightSoiree</div>
+<div class="decorative-line"></div>
+
+</div>
+</section>
+
+<!-- RSVP -->
+<section id="rsvp">
+<div class="card">
+<h2>RSVP</h2>
+<p>Click the envelope to confirm your attendance</p>
+<div class="envelope-wrapper" onclick="openEnvelope(this)">
+<div class="envelope"></div>
+<div class="flap"></div>
+<div class="letter">
+<p>You are invited to Kelcy's 18th Birthday Debut.<br>Please confirm your attendance.</p>
+</div>
+</div>
+<a href="https://docs.google.com/forms/d/1d1lra9yjGRfGk_uMQCryzt1DGTbPW2gK8V9PHVX8vrA/viewform?usp=sharing" target="_blank" class="rsvp-btn">Confirm Attendance</a>
+</div>
+</section>
+
+<script>
+// Intro
+function enterSite(){document.getElementById("intro").style.display="none";}
+
+// Music
+var music=document.getElementById("music");
+function toggleMusic(){
+  if(music.paused){music.play();document.getElementById("musicBtn").innerText="Pause Music";}
+  else{music.pause();document.getElementById("musicBtn").innerText="Play Music";}
+}
+
+// Scroll reveal
+window.addEventListener("scroll",()=>{document.querySelectorAll("section").forEach(sec=>{if(sec.getBoundingClientRect().top < window.innerHeight-100){sec.classList.add("show");}});});
+
+// Envelope
+function openEnvelope(el){el.classList.toggle("open");}
+
+// Countdown
+var countDate = new Date("May 02, 2026 18:00:00").getTime();
+setInterval(function(){
+  var now = new Date().getTime();
+  var dist = countDate - now;
+  var d = Math.floor(dist/(1000*60*60*24));
+  var h = Math.floor((dist%(1000*60*60*24))/(1000*60*60));
+  var m = Math.floor((dist%(1000*60*60))/(1000*60));
+  var s = Math.floor((dist%(1000*60))/1000);
+  document.getElementById("timer").innerHTML = d+"d "+h+"h "+m+"m "+s+"s";
+},1000);
+
+// Magic star cursor
+document.addEventListener("mousemove",function(e){
+  let star=document.createElement("div");
+  star.className="star";
+  star.style.left=e.pageX+"px";
+  star.style.top=e.pageY+"px";
+  document.body.appendChild(star);
+  setTimeout(()=>{star.remove();},1000);
+});
+
+// Wand cursor on click
+document.addEventListener("click",()=>{document.body.classList.toggle("cursor-wand");});
+</script>
+</body>
+</html>
